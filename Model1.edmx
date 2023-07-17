@@ -1,0 +1,385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище TestCoreModel" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="Department_Id" />
+          </Key>
+          <Property Name="Department_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Department_Name" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Email">
+          <Key>
+            <PropertyRef Name="Email_Id" />
+          </Key>
+          <Property Name="Email_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Email_Name" Type="varchar(max)" />
+          <Property Name="Employees_Id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="Employees_Id" />
+          </Key>
+          <Property Name="Employees_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Employees_FIO" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="EmployeesToDepartment">
+          <Key>
+            <PropertyRef Name="Employees_Id" />
+            <PropertyRef Name="Department_Id" />
+          </Key>
+          <Property Name="Employees_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Department_Id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Phone">
+          <Key>
+            <PropertyRef Name="Phone_Id" />
+          </Key>
+          <Property Name="Phone_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Phone_Name" Type="varchar(max)" />
+          <Property Name="TypePhone_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Employees_Id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TypePhone">
+          <Key>
+            <PropertyRef Name="TypePhone_Id" />
+          </Key>
+          <Property Name="TypePhone_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TypePhone_Name" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Email__Employees__267ABA7A">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Email" Type="Self.Email" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Employees_Id" />
+            </Principal>
+            <Dependent Role="Email">
+              <PropertyRef Name="Employees_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phone__Employees__2B3F6F97">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Phone" Type="Self.Phone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Employees_Id" />
+            </Principal>
+            <Dependent Role="Phone">
+              <PropertyRef Name="Employees_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phone__TypePhone__2C3393D0">
+          <End Role="TypePhone" Type="Self.TypePhone" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Phone" Type="Self.Phone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypePhone">
+              <PropertyRef Name="TypePhone_Id" />
+            </Principal>
+            <Dependent Role="Phone">
+              <PropertyRef Name="TypePhone_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeesToDepartment_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeesToDepartment" Type="Self.EmployeesToDepartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="Department_Id" />
+            </Principal>
+            <Dependent Role="EmployeesToDepartment">
+              <PropertyRef Name="Department_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeesToDepartment_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeesToDepartment" Type="Self.EmployeesToDepartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Employees_Id" />
+            </Principal>
+            <Dependent Role="EmployeesToDepartment">
+              <PropertyRef Name="Employees_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище TestCoreModelContainer">
+          <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Email" EntityType="Self.Email" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeesToDepartment" EntityType="Self.EmployeesToDepartment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phone" EntityType="Self.Phone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypePhone" EntityType="Self.TypePhone" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Email__Employees__267ABA7A" Association="Self.FK__Email__Employees__267ABA7A">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Email" EntitySet="Email" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phone__Employees__2B3F6F97" Association="Self.FK__Phone__Employees__2B3F6F97">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Phone" EntitySet="Phone" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phone__TypePhone__2C3393D0" Association="Self.FK__Phone__TypePhone__2C3393D0">
+            <End Role="TypePhone" EntitySet="TypePhone" />
+            <End Role="Phone" EntitySet="Phone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeesToDepartment_Departments" Association="Self.FK_EmployeesToDepartment_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="EmployeesToDepartment" EntitySet="EmployeesToDepartment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeesToDepartment_Employees" Association="Self.FK_EmployeesToDepartment_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeesToDepartment" EntitySet="EmployeesToDepartment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestCoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="Department_Id" />
+          </Key>
+          <Property Name="Department_Id" Type="Guid" Nullable="false" />
+          <Property Name="Department_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.EmployeesToDepartment" FromRole="Departments" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Email">
+          <Key>
+            <PropertyRef Name="Email_Id" />
+          </Key>
+          <Property Name="Email_Id" Type="Guid" Nullable="false" />
+          <Property Name="Email_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Employees_Id" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Email__Employees__267ABA7A" FromRole="Email" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="Employees_Id" />
+          </Key>
+          <Property Name="Employees_Id" Type="Guid" Nullable="false" />
+          <Property Name="Employees_FIO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Email" Relationship="Self.FK__Email__Employees__267ABA7A" FromRole="Employees" ToRole="Email" />
+          <NavigationProperty Name="Phone" Relationship="Self.FK__Phone__Employees__2B3F6F97" FromRole="Employees" ToRole="Phone" />
+          <NavigationProperty Name="Departments" Relationship="Self.EmployeesToDepartment" FromRole="Employees" ToRole="Departments" />
+        </EntityType>
+        <EntityType Name="Phone">
+          <Key>
+            <PropertyRef Name="Phone_Id" />
+          </Key>
+          <Property Name="Phone_Id" Type="Guid" Nullable="false" />
+          <Property Name="Phone_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TypePhone_Id" Type="Guid" Nullable="false" />
+          <Property Name="Employees_Id" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Phone__Employees__2B3F6F97" FromRole="Phone" ToRole="Employees" />
+          <NavigationProperty Name="TypePhone" Relationship="Self.FK__Phone__TypePhone__2C3393D0" FromRole="Phone" ToRole="TypePhone" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TypePhone">
+          <Key>
+            <PropertyRef Name="TypePhone_Id" />
+          </Key>
+          <Property Name="TypePhone_Id" Type="Guid" Nullable="false" />
+          <Property Name="TypePhone_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Phone" Relationship="Self.FK__Phone__TypePhone__2C3393D0" FromRole="TypePhone" ToRole="Phone" />
+        </EntityType>
+        <Association Name="FK__Email__Employees__267ABA7A">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Email" Type="Self.Email" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Employees_Id" />
+            </Principal>
+            <Dependent Role="Email">
+              <PropertyRef Name="Employees_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phone__Employees__2B3F6F97">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Phone" Type="Self.Phone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Employees_Id" />
+            </Principal>
+            <Dependent Role="Phone">
+              <PropertyRef Name="Employees_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phone__TypePhone__2C3393D0">
+          <End Role="TypePhone" Type="Self.TypePhone" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Phone" Type="Self.Phone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypePhone">
+              <PropertyRef Name="TypePhone_Id" />
+            </Principal>
+            <Dependent Role="Phone">
+              <PropertyRef Name="TypePhone_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmployeesToDepartment">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="*" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="TestCoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Departments" EntityType="Self.Departments" />
+          <EntitySet Name="Email" EntityType="Self.Email" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" />
+          <EntitySet Name="Phone" EntityType="Self.Phone" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TypePhone" EntityType="Self.TypePhone" />
+          <AssociationSet Name="FK__Email__Employees__267ABA7A" Association="Self.FK__Email__Employees__267ABA7A">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Email" EntitySet="Email" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phone__Employees__2B3F6F97" Association="Self.FK__Phone__Employees__2B3F6F97">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Phone" EntitySet="Phone" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phone__TypePhone__2C3393D0" Association="Self.FK__Phone__TypePhone__2C3393D0">
+            <End Role="TypePhone" EntitySet="TypePhone" />
+            <End Role="Phone" EntitySet="Phone" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeesToDepartment" Association="Self.EmployeesToDepartment">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище TestCoreModelContainer" CdmEntityContainer="TestCoreEntities">
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="TestCoreModel.Departments">
+              <MappingFragment StoreEntitySet="Departments">
+                <ScalarProperty Name="Department_Id" ColumnName="Department_Id" />
+                <ScalarProperty Name="Department_Name" ColumnName="Department_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Email">
+            <EntityTypeMapping TypeName="TestCoreModel.Email">
+              <MappingFragment StoreEntitySet="Email">
+                <ScalarProperty Name="Email_Id" ColumnName="Email_Id" />
+                <ScalarProperty Name="Email_Name" ColumnName="Email_Name" />
+                <ScalarProperty Name="Employees_Id" ColumnName="Employees_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="TestCoreModel.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="Employees_Id" ColumnName="Employees_Id" />
+                <ScalarProperty Name="Employees_FIO" ColumnName="Employees_FIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phone">
+            <EntityTypeMapping TypeName="TestCoreModel.Phone">
+              <MappingFragment StoreEntitySet="Phone">
+                <ScalarProperty Name="Phone_Id" ColumnName="Phone_Id" />
+                <ScalarProperty Name="Phone_Name" ColumnName="Phone_Name" />
+                <ScalarProperty Name="TypePhone_Id" ColumnName="TypePhone_Id" />
+                <ScalarProperty Name="Employees_Id" ColumnName="Employees_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TestCoreModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypePhone">
+            <EntityTypeMapping TypeName="TestCoreModel.TypePhone">
+              <MappingFragment StoreEntitySet="TypePhone">
+                <ScalarProperty Name="TypePhone_Id" ColumnName="TypePhone_Id" />
+                <ScalarProperty Name="TypePhone_Name" ColumnName="TypePhone_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="EmployeesToDepartment" TypeName="TestCoreModel.EmployeesToDepartment" StoreEntitySet="EmployeesToDepartment">
+            <EndProperty Name="Departments">
+              <ScalarProperty Name="Department_Id" ColumnName="Department_Id" />
+            </EndProperty>
+            <EndProperty Name="Employees">
+              <ScalarProperty Name="Employees_Id" ColumnName="Employees_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
